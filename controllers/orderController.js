@@ -12,11 +12,14 @@ const frontend_URL = 'http://localhost:5173';
 const placeOrder = async (req, res) => {
 
     try {
+        console.log(req.body);
+        
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
+            mess: req.body.messId
         })
         await newOrder.save();
         await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
@@ -60,14 +63,15 @@ const placeOrder = async (req, res) => {
 
 // Placing User Order for Frontend using stripe
 const placeOrderCod = async (req, res) => {
-
     try {
+        console.log(req.body);
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
             payment: true,
+            mess: req.body.messId,
         })
         await newOrder.save();
         await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
@@ -83,7 +87,7 @@ const placeOrderCod = async (req, res) => {
 // Listing Order for Admin panel
 const listOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({});
+        const orders = await orderModel.find({"mess": req.body.messId});
         res.json({ success: true, data: orders })
     } catch (error) {
         console.log(error);

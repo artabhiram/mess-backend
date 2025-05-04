@@ -35,7 +35,6 @@ const loginMess = async (req,res) => {
 //register user
 const registerMess = async (req,res) => {
     const {name, email, password} = req.body;
-    console.log(req.body);
     try{
         //check if user already exists
         const exists = await messModel.findOne({email})
@@ -67,4 +66,16 @@ const registerMess = async (req,res) => {
     }
 }
 
-export {loginMess, registerMess}
+// all food list
+const listMess = async (req, res) => {
+    try {
+        const messes = await messModel.find({})
+        res.json({ success: true, data: messes })
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error" })
+    }
+
+}
+
+export {loginMess, registerMess, listMess}
