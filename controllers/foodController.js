@@ -172,6 +172,26 @@ const addReviewToFood = async (req, res) => {
 //     }
 //   };
 
+const updateFood = async (req, res) => {
+  const { id, field, value } = req.body;
+
+  try {
+    const food = await foodModel.findById(id);
+    if (!food) {
+      return res.json({ success: false, message: 'Food item not found' });
+    }
+
+    // Dynamically update the field
+    food[field] = value;
+    await food.save();
+
+    res.json({ success: true, message: 'Food item updated successfully', data: food });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: 'Server error' });
+  }
+};
+
 const toggleDynamicPricing = async (req, res) => {
     try {
       const { foodId } = req.body;
@@ -197,4 +217,4 @@ const toggleDynamicPricing = async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error' });
     }
   };
-export { listFood, addFood, removeFood, addReviewToFood, toggleDynamicPricing }
+export { listFood, addFood, removeFood, addReviewToFood, toggleDynamicPricing, updateFood }
