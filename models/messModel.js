@@ -5,9 +5,13 @@ const messSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     image: { type: String },
-
-
-}, { minimize: false })
+    primaryColor: { type: String },
+    secondaryColor: { type: String },
+    cardColor: { type: String },         // Add this
+    textColor: { type: String },         // Add this
+  }, { minimize: false });
+  
+  
 
 const messModel = mongoose.models.mess|| mongoose.model("mess", messSchema);
 export default messModel;

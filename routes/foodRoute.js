@@ -1,5 +1,5 @@
 import express from 'express';
-import { addFood, listFood, removeFood, addReviewToFood,toggleDynamicPricing } from '../controllers/foodController.js';
+import { addFood, updateFood,listFood, removeFood, addReviewToFood,toggleDynamicPricing } from '../controllers/foodController.js';
 import multer from 'multer';
 import messAuthMiddleware from '../middleware/messAuth.js';
 import authMiddleware from '../middleware/auth.js'
@@ -22,6 +22,7 @@ foodRouter.post("/add",upload.single('image'),messAuthMiddleware,addFood);
 foodRouter.post("/remove",removeFood);
 foodRouter.post("/add-review",authMiddleware, addReviewToFood);
 foodRouter.post('/toggle-dynamic-pricing', toggleDynamicPricing);
+foodRouter.post('/update', updateFood); // POST /api/food/update
 
 
 export default foodRouter;

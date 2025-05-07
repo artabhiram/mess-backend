@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const messAuthMiddleware = async (req, res, next) => {
     const { token } = req.headers;
+    console.log(req.headers);
     
     try {
         
